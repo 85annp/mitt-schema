@@ -53,7 +53,7 @@ export default function ScheduleViewer({ kommun, skola, schemaId, unitGuid }: Sc
       const group = (l.texts || []).length > 1 ? (l.texts || [])[1] : "";
       subjects.add(group ? `${name} (${group})` : name);
     });
-    return Array.from(subjects);
+    return Array.from(subjects).sort((a, b) => a.localeCompare(b));
   }, [lessons]);
 
   const handleColorChange = (subject: string, color: string) => {

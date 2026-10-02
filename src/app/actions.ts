@@ -28,6 +28,8 @@ export async function getClasses(kommun: string, unitGuid: string) {
   }
 }
 
+import getNextMondayIfWeekend from "@/utils/getNextMondayIfWeekend";
+
 export async function getWeeklySchedule(kommun: string, unitGuid: string, schemaId: string, year?: number, week?: number) {
   try {
     const hostName = `${kommunToSkola24(kommun)}.skola24.se`;
@@ -35,8 +37,10 @@ export async function getWeeklySchedule(kommun: string, unitGuid: string, schema
     const signature = await getSignature(schemaId);
     const key = await getKey();
     
-    const targetYear = year || new Date().getFullYear();
-    const targetWeek = week || getCurrentWeekNumber(new Date());
+    // Auto-advance to next week if it's the weekend
+    const defaultDate = getNextMondayIfWeekend(new Date());
+    const targetYear = year || defaultDate.getFullYear();
+    const targetWeek = week || getCurrentWeekNumber(defaultDate);
 
     const timetable = await getTimetable(
       schoolYear,
