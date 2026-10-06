@@ -49,28 +49,34 @@ export function formatTimeHM(timeStr: string): string {
 }
 
 /**
- * Formats duration in seconds to Swedish readable text.
- * e.g. "14 min 20 sek", "3 min", "45 sek"
+ * Formats duration in seconds to "mm:ss" format.
+ * e.g. 125 seconds -> "02:05"
+ * e.g. 872 seconds -> "14:32"
+ * e.g. 45 seconds -> "00:45"
+ */
+export function formatMMSS(seconds: number): string {
+  const safeSec = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(safeSec / 60);
+  const remainingSeconds = safeSec % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+}
+
+/**
+ * Formats duration in seconds.
+ * formattedText is in "mm:ss" format (e.g. "14:32", "00:45").
  */
 export function formatRemainingTime(seconds: number): {
   minutes: number;
   remainingSeconds: number;
   formattedText: string;
+  mmSS: string;
 } {
   const safeSec = Math.max(0, Math.floor(seconds));
   const minutes = Math.floor(safeSec / 60);
   const remainingSeconds = safeSec % 60;
+  const mmSS = formatMMSS(safeSec);
 
-  let formattedText = "";
-  if (minutes > 0 && remainingSeconds > 0) {
-    formattedText = `${minutes} min ${remainingSeconds} sek`;
-  } else if (minutes > 0) {
-    formattedText = `${minutes} min`;
-  } else {
-    formattedText = `${remainingSeconds} sek`;
-  }
-
-  return { minutes, remainingSeconds, formattedText };
+  return { minutes, remainingSeconds, formattedText: mmSS, mmSS };
 }
 
 export interface LessonStatusResult {

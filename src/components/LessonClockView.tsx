@@ -20,6 +20,7 @@ import {
   getLessonStatus,
   formatTimeHM,
   formatRemainingTime,
+  formatMMSS,
   isRealLesson,
   parseTimeToSeconds,
 } from "@/utils/lessonClockUtils";
@@ -279,7 +280,7 @@ export default function LessonClockView({
                 Tid kvar på lektionen
               </div>
               <div
-                className={`text-4xl sm:text-5xl md:text-6xl font-black tracking-tight tabular-nums transition-colors duration-300 ${
+                className={`text-5xl sm:text-6xl md:text-7xl font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
                   isLastMinute
                     ? "text-rose-600 animate-pulse"
                     : isEndingSoon
@@ -287,7 +288,10 @@ export default function LessonClockView({
                     : "text-blue-600"
                 }`}
               >
-                {remainingFormatted.formattedText} kvar
+                {remainingFormatted.mmSS}
+                <span className="text-2xl sm:text-3xl font-sans font-semibold text-slate-400 ml-2">
+                  kvar
+                </span>
               </div>
 
               {/* Visual 3-minute notice */}
