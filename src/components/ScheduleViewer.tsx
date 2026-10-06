@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { getWeeklySchedule } from "@/app/actions";
-import { LayoutGrid, List as ListIcon, Settings, Printer } from "lucide-react";
+import { LayoutGrid, List as ListIcon, Settings, Printer, Clock } from "lucide-react";
 import ColorSettings from "./ColorSettings";
+import { isRealLesson } from "@/utils/lessonClockUtils";
 
 interface ScheduleViewerProps {
   kommun: string;
@@ -48,10 +49,12 @@ export default function ScheduleViewer({ kommun, skola, schemaId, unitGuid }: Sc
   const uniqueSubjects = useMemo(() => {
     const subjects = new Set<string>();
     lessons.forEach(l => {
-      // texts[0] = subject, texts[1] = group typically, let's allow both or combine them
-      const name = (l.texts || [])[0] || "Okänd";
+      if (!isRealLesson(l)) return;
+      const name = (l.texts || [])[0] || "";
       const group = (l.texts || []).length > 1 ? (l.texts || [])[1] : "";
-      subjects.add(group ? `${name} (${group})` : name);
+      if (name) {
+        subjects.add(group ? `${name} (${group})` : name);
+      }
     });
     return Array.from(subjects).sort((a, b) => a.localeCompare(b));
   }, [lessons]);
@@ -60,6 +63,31 @@ export default function ScheduleViewer({ kommun, skola, schemaId, unitGuid }: Sc
     const newColors = { ...colors, [subject]: color };
     setColors(newColors);
     localStorage.setItem("scheduleColors", JSON.stringify(newColors));
+  };
+
+  const handleOpenClockWindow = () => {
+    // Cache current lessons in localStorage for immediate display in the new window
+    if (lessons && lessons.length > 0) {
+      try {
+        localStorage.setItem("mittSchemaLessons", JSON.stringify(lessons));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    const params = new URLSearchParams();
+    if (kommun) params.set("kommun", kommun);
+    if (skola) params.set("skola", skola);
+    if (schemaId) params.set("id", schemaId);
+    if (unitGuid) params.set("unitGuid", unitGuid);
+
+    const url = `/klocka?${params.toString()}`;
+    const windowFeatures = "width=720,height=640,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes";
+    const newWindow = window.open(url, "mittSchemaLektionsklocka", windowFeatures);
+    if (!newWindow) {
+      // Fallback if popup blocker intercepted
+      window.open(url, "_blank");
+    }
   };
 
   if (loading) {
@@ -165,6 +193,14 @@ export default function ScheduleViewer({ kommun, skola, schemaId, unitGuid }: Sc
         )}
 
         <div className="flex space-x-2">
+          <button
+            onClick={handleOpenClockWindow}
+            title="Öppna lektionsklocka i ett nytt fönster"
+            className="p-2 rounded-lg flex items-center space-x-1 hover:bg-blue-50 text-blue-700 font-medium border border-blue-200 transition-colors"
+          >
+            <Clock size={18} />
+            <span className="hidden sm:inline">Lektionsklocka</span>
+          </button>
           <button
             onClick={() => window.print()}
             className="p-2 rounded-lg flex items-center space-x-1 hover:bg-gray-100"
