@@ -5,6 +5,7 @@ import { getWeeklySchedule } from "@/app/actions";
 import { LayoutGrid, List as ListIcon, Settings, Printer, Clock } from "lucide-react";
 import ColorSettings from "./ColorSettings";
 import { isRealLesson } from "@/utils/lessonClockUtils";
+import { computeDayScheduleLayout } from "@/utils/scheduleLayout";
 
 interface ScheduleViewerProps {
   kommun: string;
@@ -224,49 +225,77 @@ export default function ScheduleViewer({ kommun, skola, schemaId, unitGuid }: Sc
 
       {viewMode === "grid" ? (
         <div className="grid grid-cols-5 gap-2 bg-white p-4 rounded-xl shadow-sm border border-gray-100 overflow-x-auto min-w-[700px]">
-          {days.map((day, idx) => (
-            <div key={day} className="flex flex-col space-y-2">
-              <h3 className="font-bold text-center border-b pb-2">{dayNames[idx]}</h3>
-              <div className="relative h-[900px]">
-                {lessons
-                  .filter((l) => l.dayOfWeekNumber === day)
-                  .sort((a, b) => {
-                    const getDuration = (lesson: any) => {
-                      const [startH, startM] = lesson.timeStart.split(":").map(Number);
-                      const [endH, endM] = lesson.timeEnd.split(":").map(Number);
-                      return (endH * 60 + endM) - (startH * 60 + startM);
-                    };
-                    return getDuration(b) - getDuration(a); // Longest first (so they render in the background)
-                  })
-                  .map((lesson, i) => {
+          {days.map((day, idx) => {
+            const dayLessons = lessons.filter((l) => l.dayOfWeekNumber === day);
+            const { backgroundLessons, realLessons } = computeDayScheduleLayout(dayLessons);
+            const scheduleStartMinutes = 7 * 60;
+            const scale = 1.5;
+
+            return (
+              <div key={day} className="flex flex-col space-y-2">
+                <h3 className="font-bold text-center border-b pb-2">{dayNames[idx]}</h3>
+                <div className="relative h-[900px]">
+                  {/* Background passes (working hours / arbetstid without text) - no hover effect */}
+                  {backgroundLessons.map((lesson) => {
                     const bgColor = getLessonColor(lesson);
                     const textColor = getTextColor(bgColor);
-                    
-                    // Simple height/top calculation based on time
+
                     const [startH, startM] = lesson.timeStart.split(":").map(Number);
                     const [endH, endM] = lesson.timeEnd.split(":").map(Number);
-                    
-                    // Assume schedule starts at 07:00 (420 minutes) to avoid missing early lessons
-                    const scheduleStartMinutes = 7 * 60;
+
                     const startMinutes = (startH * 60 + startM) - scheduleStartMinutes;
                     const endMinutes = (endH * 60 + endM) - scheduleStartMinutes;
-                    const duration = Math.max(endMinutes - startMinutes, 10); // at least 10px height
-                    
-                    // 1 minute = 1.5px (just to scale nicely)
-                    const scale = 1.5;
+                    const duration = Math.max(endMinutes - startMinutes, 10);
 
                     return (
                       <div
                         key={lesson.guidId}
-                        className="absolute w-full rounded-md p-1 text-xs shadow-sm overflow-hidden opacity-95 hover:opacity-100 hover:z-10 transition-all border border-white cursor-default"
+                        className="absolute w-full rounded-md p-1 text-xs shadow-sm overflow-hidden opacity-80 border border-white/60 cursor-default schedule-pass-background"
                         style={{
                           top: `${Math.max(startMinutes * scale, 0)}px`,
                           height: `${duration * scale}px`,
                           backgroundColor: bgColor,
                           color: textColor,
                           WebkitPrintColorAdjust: "exact",
-                          printColorAdjust: "exact"
+                          printColorAdjust: "exact",
                         }}
+                      >
+                        <div className="absolute bottom-1 right-1 opacity-75 text-[9px]">
+                          {formatTime(lesson.timeStart)}-{formatTime(lesson.timeEnd)}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* Real lessons with text - colliding passes share width and expand on hover */}
+                  {realLessons.map((item) => {
+                    const { lesson, isColliding, leftPercent, widthPercent } = item;
+                    const bgColor = getLessonColor(lesson);
+                    const textColor = getTextColor(bgColor);
+
+                    const [startH, startM] = lesson.timeStart.split(":").map(Number);
+                    const [endH, endM] = lesson.timeEnd.split(":").map(Number);
+
+                    const startMinutes = (startH * 60 + startM) - scheduleStartMinutes;
+                    const endMinutes = (endH * 60 + endM) - scheduleStartMinutes;
+                    const duration = Math.max(endMinutes - startMinutes, 10);
+
+                    return (
+                      <div
+                        key={lesson.guidId}
+                        className={`absolute rounded-md p-1 text-xs shadow-sm overflow-hidden opacity-95 hover:opacity-100 border border-white cursor-default schedule-pass-real ${
+                          isColliding ? "is-colliding" : ""
+                        }`}
+                        style={{
+                          top: `${Math.max(startMinutes * scale, 0)}px`,
+                          height: `${duration * scale}px`,
+                          backgroundColor: bgColor,
+                          color: textColor,
+                          WebkitPrintColorAdjust: "exact",
+                          printColorAdjust: "exact",
+                          "--col-left": `${leftPercent}%`,
+                          "--col-width": `${widthPercent}%`,
+                        } as React.CSSProperties}
                       >
                         <div className="font-semibold truncate">{(lesson.texts || [])[0]}</div>
                         {(lesson.texts || []).slice(1).map((t: string, ti: number) => (
@@ -278,9 +307,10 @@ export default function ScheduleViewer({ kommun, skola, schemaId, unitGuid }: Sc
                       </div>
                     );
                   })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="space-y-4">
