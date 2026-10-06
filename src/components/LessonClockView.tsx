@@ -257,7 +257,7 @@ export default function LessonClockView({
                       isEndingSoon ? "bg-amber-500 animate-ping" : "bg-emerald-500"
                     }`}
                   />
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
                     {lessonSubject}
                   </h2>
                 </div>
@@ -289,9 +289,7 @@ export default function LessonClockView({
                 }`}
               >
                 {remainingFormatted.mmSS}
-                <span className="text-2xl sm:text-3xl font-sans font-semibold text-slate-400 ml-2">
-                  kvar
-                </span>
+                <span className="text-2xl sm:text-3xl font-sans font-semibold text-slate-400 ml-2"></span>
               </div>
 
               {/* Visual 3-minute notice */}
