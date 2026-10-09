@@ -395,13 +395,6 @@ export default function LessonClockView({
                 }`}
               >
                 {remainingFormatted.mmSS}
-                <span
-                  className={`text-2xl sm:text-3xl font-sans font-semibold ml-2 ${
-                    isDarkMode ? "text-slate-500" : "text-slate-400"
-                  }`}
-                >
-                  kvar
-                </span>
               </div>
 
               {/* Visual 3-minute notice */}
