@@ -451,7 +451,7 @@ export default function LessonClockView({
                   isDarkMode ? "text-slate-400" : "text-slate-400"
                 }`}
               >
-                Tid kvar på lektionen
+                Tid kvar
               </div>
               <div
                 className={`text-[clamp(2.75rem,15vw,5.5rem)] leading-none font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
