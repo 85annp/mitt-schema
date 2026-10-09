@@ -164,13 +164,12 @@ export default function LessonClockView({
     return getLessonStatus(lessons, effectiveDate);
   }, [lessons, effectiveDate]);
 
-  // Format digital clock
+  // Format digital clock (HH:mm without seconds)
   const clockString = useMemo(() => {
     const d = effectiveDate;
     const h = String(d.getHours()).padStart(2, "0");
     const m = String(d.getMinutes()).padStart(2, "0");
-    const s = String(d.getSeconds()).padStart(2, "0");
-    return `${h}:${m}:${s}`;
+    return `${h}:${m}`;
   }, [effectiveDate]);
 
   // Format Swedish date
@@ -212,7 +211,7 @@ export default function LessonClockView({
 
   return (
     <div
-      className={`min-h-screen flex flex-col justify-between p-4 sm:p-8 select-none transition-colors duration-300 ${
+      className={`min-h-screen flex flex-col justify-between p-3 sm:p-6 md:p-8 select-none transition-colors duration-300 ${
         isDarkMode
           ? "dark bg-slate-950 text-slate-100"
           : "bg-gradient-to-br from-slate-50 via-white to-blue-50/40 text-slate-800"
@@ -220,30 +219,30 @@ export default function LessonClockView({
     >
       {/* Top Header Bar */}
       <header
-        className={`flex items-center justify-between gap-4 pb-4 border-b ${
+        className={`flex items-center justify-between gap-2 sm:gap-4 pb-2.5 sm:pb-4 border-b ${
           isDarkMode ? "border-slate-800" : "border-slate-200/80"
         }`}
       >
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 min-w-0">
           <div
-            className={`p-2 rounded-xl shadow-xs ${
+            className={`p-1.5 sm:p-2 rounded-xl shadow-xs shrink-0 ${
               isDarkMode
                 ? "bg-blue-950/80 text-blue-400 border border-blue-800/50"
                 : "bg-blue-100 text-blue-600"
             }`}
           >
-            <Clock size={22} className="stroke-[2.5]" />
+            <Clock size={20} className="stroke-[2.5]" />
           </div>
-          <div>
+          <div className="min-w-0">
             <h1
-              className={`text-base sm:text-lg font-bold tracking-tight leading-tight ${
+              className={`text-sm sm:text-base md:text-lg font-bold tracking-tight leading-tight truncate ${
                 isDarkMode ? "text-white" : "text-slate-900"
               }`}
             >
               Lektionsklocka
             </h1>
             <p
-              className={`text-xs truncate max-w-[180px] sm:max-w-md ${
+              className={`text-[11px] sm:text-xs truncate max-w-[140px] sm:max-w-xs md:max-w-md ${
                 isDarkMode ? "text-slate-400" : "text-slate-500"
               }`}
             >
@@ -253,55 +252,55 @@ export default function LessonClockView({
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
           {/* Dark / Light Mode Toggle */}
           <button
             onClick={toggleDarkMode}
             title={isDarkMode ? "Växla till ljust läge" : "Växla till mörkt läge (projektor)"}
-            className={`p-2 rounded-lg border transition-colors shadow-xs ${
+            className={`p-1.5 sm:p-2 rounded-lg border transition-colors shadow-xs ${
               isDarkMode
                 ? "bg-slate-900 border-slate-800 hover:bg-slate-800 text-amber-400 hover:text-amber-300"
                 : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
             }`}
           >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            {isDarkMode ? <Sun size={17} /> : <Moon size={17} />}
           </button>
 
           {/* Refresh schedule */}
           <button
             onClick={() => loadSchedule()}
             title="Uppdatera schema"
-            className={`p-2 rounded-lg border transition-colors shadow-xs ${
+            className={`p-1.5 sm:p-2 rounded-lg border transition-colors shadow-xs ${
               isDarkMode
                 ? "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white"
                 : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
             }`}
           >
-            <RefreshCw size={18} />
+            <RefreshCw size={17} />
           </button>
 
           {/* Fullscreen toggle */}
           <button
             onClick={toggleFullscreen}
             title={isFullscreen ? "Avsluta helskärm" : "Helskärm"}
-            className={`p-2 rounded-lg border transition-colors shadow-xs ${
+            className={`p-1.5 sm:p-2 rounded-lg border transition-colors shadow-xs ${
               isDarkMode
                 ? "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white"
                 : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
             }`}
           >
-            {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+            {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
           </button>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col items-center justify-center my-6 max-w-3xl w-full mx-auto space-y-8">
+      <main className="flex-1 flex flex-col items-center justify-center my-auto py-2 sm:py-6 max-w-3xl w-full mx-auto space-y-3 sm:space-y-6 md:space-y-8">
         
         {/* Current Time Section ("Vad klockan är") */}
-        <section className="text-center space-y-1">
+        <section className="text-center space-y-0.5 sm:space-y-1">
           <div
-            className={`text-6xl sm:text-7xl md:text-8xl font-black font-mono tracking-tight tabular-nums drop-shadow-xs ${
+            className={`text-[clamp(2.5rem,13vw,6rem)] leading-none font-black font-mono tracking-tight tabular-nums drop-shadow-xs ${
               isDarkMode ? "text-white" : "text-slate-900"
             }`}
             aria-label={`Klockan är ${clockString}`}
@@ -309,7 +308,7 @@ export default function LessonClockView({
             {clockString}
           </div>
           <div
-            className={`text-sm sm:text-base font-medium capitalize tracking-wide ${
+            className={`text-[clamp(0.75rem,2.8vw,1rem)] font-medium capitalize tracking-wide ${
               isDarkMode ? "text-slate-400" : "text-slate-500"
             }`}
           >
@@ -320,7 +319,7 @@ export default function LessonClockView({
         {/* Lesson Card */}
         {activeLesson ? (
           <section
-            className={`w-full rounded-2xl p-6 sm:p-8 shadow-lg border transition-all duration-500 ${
+            className={`w-full rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border transition-all duration-500 ${
               isLastMinute
                 ? isDarkMode
                   ? "bg-rose-950/50 border-rose-500/70 shadow-rose-950/50"
@@ -335,16 +334,16 @@ export default function LessonClockView({
             }`}
           >
             {/* Top section: Lesson Subject on one row, Details & Start-End below */}
-            <div className={`border-b pb-4 ${isDarkMode ? "border-slate-800" : "border-slate-100"}`}>
+            <div className={`border-b pb-2.5 sm:pb-4 ${isDarkMode ? "border-slate-800" : "border-slate-100"}`}>
               {/* Row 1: Subject */}
-              <div className="flex items-center space-x-2.5">
+              <div className="flex items-center space-x-2 sm:space-x-2.5 min-w-0">
                 <span
-                  className={`inline-block w-3 h-3 rounded-full shrink-0 ${
+                  className={`inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0 ${
                     isEndingSoon ? "bg-amber-500 animate-ping" : "bg-emerald-500"
                   }`}
                 />
                 <h2
-                  className={`text-2xl sm:text-3xl font-extrabold tracking-tight truncate ${
+                  className={`text-[clamp(1.25rem,5.5vw,2.25rem)] leading-tight font-extrabold tracking-tight truncate ${
                     isDarkMode ? "text-white" : "text-slate-900"
                   }`}
                 >
@@ -354,7 +353,7 @@ export default function LessonClockView({
 
               {/* Row 2: Details and Start-End time (same font size as details) */}
               <div
-                className={`flex flex-wrap items-center gap-x-2.5 gap-y-1 text-sm font-medium mt-1.5 ml-5.5 ${
+                className={`flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[clamp(0.75rem,2.8vw,0.875rem)] font-medium mt-1 ml-4.5 sm:ml-5.5 ${
                   isDarkMode ? "text-slate-400" : "text-slate-500"
                 }`}
               >
@@ -364,23 +363,23 @@ export default function LessonClockView({
                     <span className={isDarkMode ? "text-slate-600" : "text-slate-300"}>•</span>
                   </>
                 )}
-                <span className="font-mono">
+                <span className="font-mono shrink-0">
                   {formatTimeHM(activeLesson.timeStart)} – {formatTimeHM(activeLesson.timeEnd)}
                 </span>
               </div>
             </div>
 
             {/* Time Remaining Section ("Hur lång tid det är kvar på lektionen") */}
-            <div className="my-6 text-center space-y-1">
+            <div className="my-3 sm:my-6 text-center space-y-1">
               <div
-                className={`text-xs sm:text-sm uppercase tracking-wider font-semibold ${
+                className={`text-[clamp(0.7rem,2.2vw,0.875rem)] uppercase tracking-wider font-semibold ${
                   isDarkMode ? "text-slate-400" : "text-slate-400"
                 }`}
               >
                 Tid kvar på lektionen
               </div>
               <div
-                className={`text-5xl sm:text-6xl md:text-7xl font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
+                className={`text-[clamp(2.75rem,15vw,5.5rem)] leading-none font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
                   isLastMinute
                     ? isDarkMode
                       ? "text-rose-400 animate-pulse"
@@ -400,13 +399,13 @@ export default function LessonClockView({
               {/* Visual 3-minute notice */}
               {isEndingSoon && (
                 <div
-                  className={`pt-2 flex items-center justify-center space-x-1.5 text-xs sm:text-sm font-semibold rounded-lg py-1 px-3 mx-auto max-w-fit animate-bounce ${
+                  className={`pt-1.5 sm:pt-2 flex items-center justify-center space-x-1.5 text-xs sm:text-sm font-semibold rounded-lg py-1 px-2.5 sm:px-3 mx-auto max-w-fit animate-bounce ${
                     isDarkMode
                       ? "text-amber-300 bg-amber-950/60 border border-amber-800/60"
                       : "text-amber-700 bg-amber-50 border border-amber-200"
                   }`}
                 >
-                  <AlertTriangle size={16} />
+                  <AlertTriangle size={15} />
                   <span>
                     {isLastMinute ? "Sista minuten! Avrunda lektionen." : "Mindre än 3 minuter kvar!"}
                   </span>
@@ -415,19 +414,19 @@ export default function LessonClockView({
             </div>
 
             {/* Progress Bar Section */}
-            <div className="space-y-2">
+            <div className="space-y-1.5 sm:space-y-2">
               <div
-                className={`flex justify-between items-center text-xs font-semibold ${
+                className={`flex justify-between items-center text-[11px] sm:text-xs font-semibold ${
                   isDarkMode ? "text-slate-400" : "text-slate-500"
                 }`}
               >
                 <span>Avklarat: {Math.round(progressPercent)}%</span>
-                <span>{formatTimeHM(activeLesson.timeEnd)}</span>
+                <span className="font-mono">{formatTimeHM(activeLesson.timeEnd)}</span>
               </div>
 
               {/* Progress bar container */}
               <div
-                className={`w-full rounded-full h-5 sm:h-6 p-0.5 overflow-hidden shadow-inner border ${
+                className={`w-full rounded-full h-4 sm:h-5 md:h-6 p-0.5 overflow-hidden shadow-inner border ${
                   isDarkMode
                     ? "bg-slate-800/80 border-slate-700"
                     : "bg-slate-100 border-slate-200"
@@ -449,7 +448,7 @@ export default function LessonClockView({
         ) : (
           /* When there is NO ongoing lesson */
           <section
-            className={`w-full rounded-2xl p-6 sm:p-8 shadow-sm border text-center space-y-4 ${
+            className={`w-full rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border text-center space-y-3 sm:space-y-4 ${
               isDarkMode
                 ? "bg-slate-900/90 border-slate-800"
                 : "bg-white border-slate-200/80"
@@ -468,14 +467,14 @@ export default function LessonClockView({
                   <span>Rast just nu</span>
                 </div>
                 <h2
-                  className={`text-2xl sm:text-3xl font-bold ${
+                  className={`text-[clamp(1.25rem,5vw,2rem)] leading-tight font-bold ${
                     isDarkMode ? "text-white" : "text-slate-800"
                   }`}
                 >
                   Ingen lektion för tillfället
                 </h2>
                 <div
-                  className={`p-4 rounded-xl border inline-block text-left max-w-md w-full ${
+                  className={`p-3 sm:p-4 rounded-xl border inline-block text-left max-w-md w-full ${
                     isDarkMode
                       ? "bg-slate-800/50 border-slate-700/80"
                       : "bg-slate-50 border-slate-100"
@@ -486,7 +485,7 @@ export default function LessonClockView({
                   </div>
                   <div className="flex justify-between items-baseline gap-2">
                     <span
-                      className={`font-bold text-lg ${
+                      className={`font-bold text-base sm:text-lg ${
                         isDarkMode ? "text-white" : "text-slate-900"
                       }`}
                     >
@@ -524,7 +523,7 @@ export default function LessonClockView({
                   <span>Före skoldagens start</span>
                 </div>
                 <h2
-                  className={`text-2xl sm:text-3xl font-bold ${
+                  className={`text-[clamp(1.25rem,5vw,2rem)] leading-tight font-bold ${
                     isDarkMode ? "text-white" : "text-slate-800"
                   }`}
                 >
@@ -550,7 +549,7 @@ export default function LessonClockView({
                   <span>Dagens lektioner är slut</span>
                 </div>
                 <h2
-                  className={`text-2xl sm:text-3xl font-bold ${
+                  className={`text-[clamp(1.25rem,5vw,2rem)] leading-tight font-bold ${
                     isDarkMode ? "text-white" : "text-slate-800"
                   }`}
                 >
@@ -580,7 +579,7 @@ export default function LessonClockView({
         {/* Small overview of today's schedule */}
         {status.todaysLessons.length > 0 && (
           <section
-            className={`w-full rounded-xl p-4 border shadow-xs ${
+            className={`w-full rounded-xl p-3 sm:p-4 border shadow-xs ${
               isDarkMode
                 ? "bg-slate-900/60 border-slate-800/80"
                 : "bg-white/70 backdrop-blur-xs border-slate-200/60"
@@ -589,7 +588,7 @@ export default function LessonClockView({
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
               Dagens lektioner ({status.todaysLessons.length} st)
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 sm:gap-2">
               {status.todaysLessons.map((l, i) => {
                 const isActive = activeLesson?.guidId === l.guidId || activeLesson === l;
                 const endSec = parseTimeToSeconds(l.timeEnd);
@@ -602,7 +601,7 @@ export default function LessonClockView({
                 return (
                   <div
                     key={l.guidId || i}
-                    className={`p-2.5 rounded-lg border text-xs flex justify-between items-center transition-all ${
+                    className={`p-1.5 sm:p-2.5 rounded-lg border text-[11px] sm:text-xs flex justify-between items-center transition-all ${
                       isActive
                         ? isDarkMode
                           ? "bg-blue-950/80 border-blue-700 text-blue-200 font-semibold shadow-xs"
@@ -617,7 +616,7 @@ export default function LessonClockView({
                     }`}
                   >
                     <span className="truncate pr-1">{(l.texts || [])[0]}</span>
-                    <span className="font-mono text-[11px] opacity-75 shrink-0">
+                    <span className="font-mono text-[10px] sm:text-[11px] opacity-75 shrink-0">
                       {formatTimeHM(l.timeStart)}-{formatTimeHM(l.timeEnd)}
                     </span>
                   </div>
