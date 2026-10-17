@@ -314,7 +314,7 @@ export default function LessonClockView({
                 : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
             }`}
           >
-            {showLessonInfo ? <EyeOff size={17} /> : <Eye size={17} />}
+            {showLessonInfo ? <Eye size={17} /> : <EyeOff size={17} />}
           </button>
 
           {/* Fullscreen toggle */}
@@ -371,76 +371,45 @@ export default function LessonClockView({
                 : "bg-white border-slate-200/80 shadow-slate-100"
             }`}
           >
-            {/* Top section: Lesson Subject on one row, Details & Start-End below (can be hidden) */}
-            {showLessonInfo ? (
+            {/* Top section: Lesson Subject on one row, Details & Start-End below (can be hidden with top eye button) */}
+            {showLessonInfo && (
               <div
-                className={`border-b pb-2.5 sm:pb-4 flex items-start justify-between gap-2 ${
+                className={`border-b pb-2.5 sm:pb-4 ${
                   isDarkMode ? "border-slate-800" : "border-slate-100"
                 }`}
               >
-                <div className="min-w-0 flex-1">
-                  {/* Row 1: Subject */}
-                  <div className="flex items-center space-x-2 sm:space-x-2.5 min-w-0">
-                    <span
-                      className={`inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0 ${
-                        isEndingSoon ? "bg-amber-500 animate-ping" : "bg-emerald-500"
-                      }`}
-                    />
-                    <h2
-                      className={`text-[clamp(1.25rem,5.5vw,2.25rem)] leading-tight font-extrabold tracking-tight truncate ${
-                        isDarkMode ? "text-white" : "text-slate-900"
-                      }`}
-                    >
-                      {lessonSubject}
-                    </h2>
-                  </div>
-
-                  {/* Row 2: Details and Start-End time (same font size as details) */}
-                  <div
-                    className={`flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[clamp(0.75rem,2.8vw,0.875rem)] font-medium mt-1 ml-4.5 sm:ml-5.5 ${
-                      isDarkMode ? "text-slate-400" : "text-slate-500"
+                {/* Row 1: Subject */}
+                <div className="flex items-center space-x-2 sm:space-x-2.5 min-w-0">
+                  <span
+                    className={`inline-block w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0 ${
+                      isEndingSoon ? "bg-amber-500 animate-ping" : "bg-emerald-500"
+                    }`}
+                  />
+                  <h2
+                    className={`text-[clamp(1.25rem,5.5vw,2.25rem)] leading-tight font-extrabold tracking-tight truncate ${
+                      isDarkMode ? "text-white" : "text-slate-900"
                     }`}
                   >
-                    {lessonDetails && (
-                      <>
-                        <span className="truncate">{lessonDetails}</span>
-                        <span className={isDarkMode ? "text-slate-600" : "text-slate-300"}>•</span>
-                      </>
-                    )}
-                    <span className="font-mono shrink-0">
-                      {formatTimeHM(activeLesson.timeStart)} – {formatTimeHM(activeLesson.timeEnd)}
-                    </span>
-                  </div>
+                    {lessonSubject}
+                  </h2>
                 </div>
 
-                {/* Direct button to hide this section */}
-                <button
-                  onClick={toggleLessonInfo}
-                  title="Dölj lektionsinfo"
-                  className={`p-1 sm:p-1.5 rounded-lg border transition-colors opacity-60 hover:opacity-100 shrink-0 ${
-                    isDarkMode
-                      ? "bg-slate-800/60 border-slate-700/80 hover:bg-slate-800 text-slate-300"
-                      : "bg-slate-100 border-slate-200 hover:bg-slate-200 text-slate-600"
+                {/* Row 2: Details and Start-End time (same font size as details) */}
+                <div
+                  className={`flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[clamp(0.75rem,2.8vw,0.875rem)] font-medium mt-1 ml-4.5 sm:ml-5.5 ${
+                    isDarkMode ? "text-slate-400" : "text-slate-500"
                   }`}
                 >
-                  <EyeOff size={15} />
-                </button>
-              </div>
-            ) : (
-              /* When hidden: Small subtle toggle to restore info */
-              <div className="flex justify-end -mt-1 -mb-1">
-                <button
-                  onClick={toggleLessonInfo}
-                  title="Visa lektionsinfo"
-                  className={`inline-flex items-center space-x-1 text-[11px] font-medium px-2 py-0.5 rounded-md border transition-colors opacity-60 hover:opacity-100 ${
-                    isDarkMode
-                      ? "bg-slate-800/60 border-slate-700 text-slate-400 hover:text-slate-200"
-                      : "bg-slate-100 border-slate-200 text-slate-500 hover:text-slate-800"
-                  }`}
-                >
-                  <Eye size={13} />
-                  <span>Visa lektionsinfo</span>
-                </button>
+                  {lessonDetails && (
+                    <>
+                      <span className="truncate">{lessonDetails}</span>
+                      <span className={isDarkMode ? "text-slate-600" : "text-slate-300"}>•</span>
+                    </>
+                  )}
+                  <span className="font-mono shrink-0">
+                    {formatTimeHM(activeLesson.timeStart)} – {formatTimeHM(activeLesson.timeEnd)}
+                  </span>
+                </div>
               </div>
             )}
 
