@@ -211,12 +211,12 @@ export default function LessonClockView({
     return (
       <div
         className={`flex flex-col items-center justify-center min-h-screen p-6 transition-colors duration-300 ${
-          isDarkMode ? "bg-slate-950 text-slate-200" : "bg-gray-50 text-gray-700"
+          isDarkMode ? "bg-slate-900 text-slate-200" : "bg-slate-200 text-slate-800"
         }`}
       >
         <RefreshCw className="animate-spin text-blue-500 mb-4" size={40} />
         <h2 className="text-xl font-semibold">Laddar lektionsklocka...</h2>
-        <p className={`text-sm mt-1 ${isDarkMode ? "text-slate-400" : "text-gray-500"}`}>
+        <p className={`text-sm mt-1 ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
           Hämtar lektioner för schemat
         </p>
       </div>
@@ -236,16 +236,16 @@ export default function LessonClockView({
 
   return (
     <div
-      className={`min-h-screen flex flex-col justify-between p-3 sm:p-6 md:p-8 select-none transition-colors duration-300 ${
+      className={`min-h-screen flex flex-col justify-between p-3 sm:p-5 md:p-6 select-none transition-colors duration-300 ${
         isDarkMode
-          ? "dark bg-slate-950 text-slate-100"
-          : "bg-gradient-to-br from-slate-50 via-white to-blue-50/40 text-slate-800"
+          ? "dark bg-slate-900 text-slate-100"
+          : "bg-slate-200 text-slate-900"
       }`}
     >
       {/* Top Header Bar */}
       <header
-        className={`flex items-center justify-between gap-2 sm:gap-4 pb-2.5 sm:pb-4 border-b ${
-          isDarkMode ? "border-slate-800" : "border-slate-200/80"
+        className={`flex items-center justify-between gap-2 sm:gap-4 pb-2 sm:pb-3 border-b ${
+          isDarkMode ? "border-slate-800" : "border-slate-300"
         }`}
       >
         <div className="flex items-center space-x-2 min-w-0">
@@ -253,7 +253,7 @@ export default function LessonClockView({
             className={`p-1.5 sm:p-2 rounded-xl shadow-xs shrink-0 ${
               isDarkMode
                 ? "bg-blue-950/80 text-blue-400 border border-blue-800/50"
-                : "bg-blue-100 text-blue-600"
+                : "bg-blue-100 text-blue-700 border border-blue-200"
             }`}
           >
             <Clock size={20} className="stroke-[2.5]" />
@@ -268,7 +268,7 @@ export default function LessonClockView({
             </h1>
             <p
               className={`text-[11px] sm:text-xs truncate max-w-[140px] sm:max-w-xs md:max-w-md ${
-                isDarkMode ? "text-slate-400" : "text-slate-500"
+                isDarkMode ? "text-slate-400" : "text-slate-600"
               }`}
             >
               {schemaId ? decodeURIComponent(schemaId) : "Schema"}
@@ -284,8 +284,8 @@ export default function LessonClockView({
             title={isDarkMode ? "Växla till ljust läge" : "Växla till mörkt läge (projektor)"}
             className={`p-1.5 sm:p-2 rounded-lg border transition-colors shadow-xs ${
               isDarkMode
-                ? "bg-slate-900 border-slate-800 hover:bg-slate-800 text-amber-400 hover:text-amber-300"
-                : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
+                ? "bg-slate-800 border-slate-700 hover:bg-slate-700 text-amber-400 hover:text-amber-300"
+                : "bg-white border-slate-300 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
             }`}
           >
             {isDarkMode ? <Sun size={17} /> : <Moon size={17} />}
@@ -297,8 +297,8 @@ export default function LessonClockView({
             title="Uppdatera schema"
             className={`p-1.5 sm:p-2 rounded-lg border transition-colors shadow-xs ${
               isDarkMode
-                ? "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white"
-                : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
+                ? "bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-300 hover:text-white"
+                : "bg-white border-slate-300 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
             }`}
           >
             <RefreshCw size={17} />
@@ -310,8 +310,8 @@ export default function LessonClockView({
             title={showLessonInfo ? "Dölj lektionsinfo" : "Visa lektionsinfo"}
             className={`p-1.5 sm:p-2 rounded-lg border transition-colors shadow-xs ${
               isDarkMode
-                ? "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white"
-                : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
+                ? "bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-300 hover:text-white"
+                : "bg-white border-slate-300 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
             }`}
           >
             {showLessonInfo ? <Eye size={17} /> : <EyeOff size={17} />}
@@ -323,8 +323,8 @@ export default function LessonClockView({
             title={isFullscreen ? "Avsluta helskärm" : "Helskärm"}
             className={`p-1.5 sm:p-2 rounded-lg border transition-colors shadow-xs ${
               isDarkMode
-                ? "bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white"
-                : "bg-white border-slate-200 hover:bg-slate-100 text-slate-600 hover:text-slate-900"
+                ? "bg-slate-800 border-slate-700 hover:bg-slate-700 text-slate-300 hover:text-white"
+                : "bg-white border-slate-300 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
             }`}
           >
             {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
@@ -333,12 +333,12 @@ export default function LessonClockView({
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col items-center justify-center my-auto py-2 sm:py-6 max-w-3xl w-full mx-auto space-y-3 sm:space-y-6 md:space-y-8">
+      <main className="flex-1 flex flex-col items-center justify-center my-auto py-2 sm:py-5 max-w-3xl w-full mx-auto space-y-2.5 sm:space-y-5 md:space-y-6">
         
         {/* Current Time Section ("Vad klockan är") */}
-        <section className="text-center space-y-0.5 sm:space-y-1">
+        <section className="text-center space-y-0.5">
           <div
-            className={`text-[clamp(2.5rem,13vw,6rem)] leading-none font-black font-mono tracking-tight tabular-nums drop-shadow-xs ${
+            className={`text-[clamp(3.25rem,15vw,6.5rem)] leading-none font-black font-mono tracking-tight tabular-nums drop-shadow-xs ${
               isDarkMode ? "text-white" : "text-slate-900"
             }`}
             aria-label={`Klockan är ${clockString}`}
@@ -347,7 +347,7 @@ export default function LessonClockView({
           </div>
           <div
             className={`text-[clamp(0.75rem,2.8vw,1rem)] font-medium capitalize tracking-wide ${
-              isDarkMode ? "text-slate-400" : "text-slate-500"
+              isDarkMode ? "text-slate-400" : "text-slate-600"
             }`}
           >
             {dateString}
@@ -357,25 +357,25 @@ export default function LessonClockView({
         {/* Lesson Card */}
         {activeLesson ? (
           <section
-            className={`w-full rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border transition-all duration-500 ${
+            className={`w-full rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 shadow-md border transition-all duration-500 ${
               isLastMinute
                 ? isDarkMode
-                  ? "bg-rose-950/50 border-rose-500/70 shadow-rose-950/50"
-                  : "bg-rose-50/90 border-rose-300 shadow-rose-100"
+                  ? "bg-rose-950/60 border-rose-500/70 shadow-rose-950/40"
+                  : "bg-rose-50 border-rose-300 shadow-rose-200/50"
                 : isEndingSoon
                 ? isDarkMode
-                  ? "bg-amber-950/40 border-amber-500/70 shadow-amber-950/40"
-                  : "bg-amber-50/90 border-amber-300 shadow-amber-100"
+                  ? "bg-amber-950/50 border-amber-500/70 shadow-amber-950/30"
+                  : "bg-amber-50 border-amber-300 shadow-amber-200/50"
                 : isDarkMode
-                ? "bg-slate-900/90 border-slate-800 shadow-slate-950/60"
-                : "bg-white border-slate-200/80 shadow-slate-100"
+                ? "bg-slate-800/90 border-slate-700 shadow-slate-950/40"
+                : "bg-white/95 border-slate-300 shadow-slate-300/40"
             }`}
           >
             {/* Top section: Lesson Subject on one row, Details & Start-End below (can be hidden with top eye button) */}
             {showLessonInfo && (
               <div
-                className={`border-b pb-2.5 sm:pb-4 ${
-                  isDarkMode ? "border-slate-800" : "border-slate-100"
+                className={`border-b pb-2 sm:pb-3 ${
+                  isDarkMode ? "border-slate-700/80" : "border-slate-200"
                 }`}
               >
                 {/* Row 1: Subject */}
@@ -386,7 +386,7 @@ export default function LessonClockView({
                     }`}
                   />
                   <h2
-                    className={`text-[clamp(1.25rem,5.5vw,2.25rem)] leading-tight font-extrabold tracking-tight truncate ${
+                    className={`text-[clamp(1.2rem,5vw,2rem)] leading-tight font-extrabold tracking-tight truncate ${
                       isDarkMode ? "text-white" : "text-slate-900"
                     }`}
                   >
@@ -397,13 +397,13 @@ export default function LessonClockView({
                 {/* Row 2: Details and Start-End time (same font size as details) */}
                 <div
                   className={`flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[clamp(0.75rem,2.8vw,0.875rem)] font-medium mt-1 ml-4.5 sm:ml-5.5 ${
-                    isDarkMode ? "text-slate-400" : "text-slate-500"
+                    isDarkMode ? "text-slate-400" : "text-slate-600"
                   }`}
                 >
                   {lessonDetails && (
                     <>
                       <span className="truncate">{lessonDetails}</span>
-                      <span className={isDarkMode ? "text-slate-600" : "text-slate-300"}>•</span>
+                      <span className={isDarkMode ? "text-slate-600" : "text-slate-400"}>•</span>
                     </>
                   )}
                   <span className="font-mono shrink-0">
@@ -414,16 +414,16 @@ export default function LessonClockView({
             )}
 
             {/* Time Remaining Section ("Hur lång tid det är kvar på lektionen") */}
-            <div className="my-3 sm:my-6 text-center space-y-1">
+            <div className="my-1.5 sm:my-3 text-center space-y-0.5 sm:space-y-1">
               <div
-                className={`text-[clamp(0.7rem,2.2vw,0.875rem)] uppercase tracking-wider font-semibold ${
-                  isDarkMode ? "text-slate-400" : "text-slate-400"
+                className={`text-[clamp(0.7rem,2vw,0.85rem)] uppercase tracking-wider font-semibold ${
+                  isDarkMode ? "text-slate-400" : "text-slate-500"
                 }`}
               >
                 Tid kvar
               </div>
               <div
-                className={`text-[clamp(2.75rem,15vw,5.5rem)] leading-none font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
+                className={`text-[clamp(2.25rem,11vw,4.5rem)] leading-none font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
                   isLastMinute
                     ? isDarkMode
                       ? "text-rose-400 animate-pulse"
@@ -458,10 +458,10 @@ export default function LessonClockView({
             </div>
 
             {/* Progress Bar Section */}
-            <div className="space-y-1.5 sm:space-y-2">
+            <div className="space-y-1 sm:space-y-1.5">
               <div
                 className={`flex justify-between items-center text-[11px] sm:text-xs font-semibold ${
-                  isDarkMode ? "text-slate-400" : "text-slate-500"
+                  isDarkMode ? "text-slate-400" : "text-slate-600"
                 }`}
               >
                 <span>Avklarat: {Math.round(progressPercent)}%</span>
@@ -470,10 +470,10 @@ export default function LessonClockView({
 
               {/* Progress bar container */}
               <div
-                className={`w-full rounded-full h-4 sm:h-5 md:h-6 p-0.5 overflow-hidden shadow-inner border ${
+                className={`w-full rounded-full h-3.5 sm:h-4.5 md:h-5 p-0.5 overflow-hidden shadow-inner border ${
                   isDarkMode
-                    ? "bg-slate-800/80 border-slate-700"
-                    : "bg-slate-100 border-slate-200"
+                    ? "bg-slate-900/80 border-slate-700"
+                    : "bg-slate-200 border-slate-300"
                 }`}
               >
                 <div
@@ -492,10 +492,10 @@ export default function LessonClockView({
         ) : (
           /* When there is NO ongoing lesson */
           <section
-            className={`w-full rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm border text-center space-y-3 sm:space-y-4 ${
+            className={`w-full rounded-xl sm:rounded-2xl p-3.5 sm:p-5 md:p-6 shadow-sm border text-center space-y-3 ${
               isDarkMode
-                ? "bg-slate-900/90 border-slate-800"
-                : "bg-white border-slate-200/80"
+                ? "bg-slate-800/90 border-slate-700"
+                : "bg-white/95 border-slate-300"
             }`}
           >
             {status.isBreak && status.nextLesson ? (
@@ -504,7 +504,7 @@ export default function LessonClockView({
                   className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-semibold ${
                     isDarkMode
                       ? "bg-amber-950/70 text-amber-300 border border-amber-800/60"
-                      : "bg-amber-100 text-amber-800"
+                      : "bg-amber-100 text-amber-800 border border-amber-200"
                   }`}
                 >
                   <Coffee size={15} />
@@ -518,10 +518,10 @@ export default function LessonClockView({
                   Ingen lektion för tillfället
                 </h2>
                 <div
-                  className={`p-3 sm:p-4 rounded-xl border inline-block text-left max-w-md w-full ${
+                  className={`p-3 sm:p-3.5 rounded-xl border inline-block text-left max-w-md w-full ${
                     isDarkMode
-                      ? "bg-slate-800/50 border-slate-700/80"
-                      : "bg-slate-50 border-slate-100"
+                      ? "bg-slate-900/60 border-slate-700"
+                      : "bg-slate-50 border-slate-200"
                   }`}
                 >
                   <div className="text-xs uppercase tracking-wider font-semibold text-slate-400 mb-1">
@@ -538,8 +538,8 @@ export default function LessonClockView({
                     <span
                       className={`text-xs font-mono px-2 py-0.5 rounded border ${
                         isDarkMode
-                          ? "bg-slate-900 border-slate-700 text-slate-300"
-                          : "bg-white border-slate-200 text-slate-600"
+                          ? "bg-slate-800 border-slate-700 text-slate-300"
+                          : "bg-white border-slate-300 text-slate-700"
                       }`}
                     >
                       {formatTimeHM(status.nextLesson.timeStart)} – {formatTimeHM(status.nextLesson.timeEnd)}
@@ -560,7 +560,7 @@ export default function LessonClockView({
                   className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-semibold ${
                     isDarkMode
                       ? "bg-blue-950/70 text-blue-300 border border-blue-800/60"
-                      : "bg-blue-100 text-blue-800"
+                      : "bg-blue-100 text-blue-800 border border-blue-200"
                   }`}
                 >
                   <Calendar size={15} />
@@ -586,7 +586,7 @@ export default function LessonClockView({
                   className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-semibold ${
                     isDarkMode
                       ? "bg-emerald-950/70 text-emerald-300 border border-emerald-800/60"
-                      : "bg-emerald-100 text-emerald-800"
+                      : "bg-emerald-100 text-emerald-800 border border-emerald-200"
                   }`}
                 >
                   <CheckCircle2 size={15} />
@@ -599,7 +599,7 @@ export default function LessonClockView({
                 >
                   Alla dagens lektioner är avklarade!
                 </h2>
-                <p className={`text-sm ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
+                <p className={`text-sm ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
                   Ha en trevlig eftermiddag/kväll.
                 </p>
               </div>
@@ -612,7 +612,7 @@ export default function LessonClockView({
                 >
                   Inga lektioner inlagda idag
                 </h2>
-                <p className={`text-sm ${isDarkMode ? "text-slate-400" : "text-slate-500"}`}>
+                <p className={`text-sm ${isDarkMode ? "text-slate-400" : "text-slate-600"}`}>
                   Det finns inga schemalagda lektioner för denna dag.
                 </p>
               </div>
@@ -623,13 +623,15 @@ export default function LessonClockView({
         {/* Small overview of today's schedule */}
         {status.todaysLessons.length > 0 && (
           <section
-            className={`w-full rounded-xl p-3 sm:p-4 border shadow-xs ${
+            className={`w-full rounded-xl p-2.5 sm:p-3.5 border shadow-xs ${
               isDarkMode
-                ? "bg-slate-900/60 border-slate-800/80"
-                : "bg-white/70 backdrop-blur-xs border-slate-200/60"
+                ? "bg-slate-800/60 border-slate-700/80"
+                : "bg-white/80 backdrop-blur-xs border-slate-300"
             }`}
           >
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+            <h3 className={`text-xs font-bold uppercase tracking-wider mb-2 ${
+              isDarkMode ? "text-slate-400" : "text-slate-600"
+            }`}>
               Dagens lektioner ({status.todaysLessons.length} st)
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 sm:gap-2">
@@ -645,18 +647,18 @@ export default function LessonClockView({
                 return (
                   <div
                     key={l.guidId || i}
-                    className={`p-1.5 sm:p-2.5 rounded-lg border text-[11px] sm:text-xs flex justify-between items-center transition-all ${
+                    className={`p-1.5 sm:p-2 rounded-lg border text-[11px] sm:text-xs flex justify-between items-center transition-all ${
                       isActive
                         ? isDarkMode
                           ? "bg-blue-950/80 border-blue-700 text-blue-200 font-semibold shadow-xs"
-                          : "bg-blue-50 border-blue-300 text-blue-900 font-semibold shadow-xs"
+                          : "bg-blue-100 border-blue-300 text-blue-900 font-semibold shadow-xs"
                         : isPassed
                         ? isDarkMode
-                          ? "bg-slate-950/40 border-slate-850 text-slate-600 line-through decoration-slate-600"
-                          : "bg-slate-50/50 border-slate-100 text-slate-400 line-through decoration-slate-300"
+                          ? "bg-slate-900/50 border-slate-800 text-slate-500 line-through decoration-slate-500"
+                          : "bg-slate-200/60 border-slate-300 text-slate-500 line-through decoration-slate-400"
                         : isDarkMode
-                        ? "bg-slate-900/90 border-slate-800 text-slate-300"
-                        : "bg-white border-slate-200/80 text-slate-700"
+                        ? "bg-slate-800 border-slate-700 text-slate-300"
+                        : "bg-white border-slate-300 text-slate-700"
                     }`}
                   >
                     <span className="truncate pr-1">{(l.texts || [])[0]}</span>
@@ -673,8 +675,8 @@ export default function LessonClockView({
 
       {/* Footer / Simulation & Testing bar */}
       <footer
-        className={`pt-4 border-t text-center ${
-          isDarkMode ? "border-slate-800/80" : "border-slate-200/70"
+        className={`pt-3 border-t text-center ${
+          isDarkMode ? "border-slate-800" : "border-slate-300"
         }`}
       >
         <div className="inline-block">
@@ -682,8 +684,8 @@ export default function LessonClockView({
             onClick={() => setShowSimControls(!showSimControls)}
             className={`text-xs inline-flex items-center space-x-1 py-1 px-2 rounded transition-colors ${
               isDarkMode
-                ? "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
-                : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+                ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-300/50"
             }`}
           >
             <Sparkles size={13} />
@@ -695,8 +697,8 @@ export default function LessonClockView({
             <div
               className={`mt-2 p-3 border rounded-xl shadow-sm text-xs space-y-2 text-left max-w-md mx-auto ${
                 isDarkMode
-                  ? "bg-slate-900 border-slate-800 text-slate-300"
-                  : "bg-white border-slate-200 text-slate-700"
+                  ? "bg-slate-800 border-slate-700 text-slate-300"
+                  : "bg-white border-slate-300 text-slate-700"
               }`}
             >
               <div
@@ -743,8 +745,8 @@ export default function LessonClockView({
                     onClick={() => setSimulatedTime(null)}
                     className={`px-2 py-1 rounded font-semibold text-[11px] transition-colors ${
                       isDarkMode
-                        ? "bg-slate-800 hover:bg-slate-700 text-slate-200"
-                        : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                        ? "bg-slate-700 hover:bg-slate-600 text-slate-200"
+                        : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
                     }`}
                   >
                     Återställ till realtid
