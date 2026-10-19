@@ -423,7 +423,7 @@ export default function LessonClockView({
                 Tid kvar
               </div>
               <div
-                className={`text-[clamp(2.25rem,11vw,4.5rem)] leading-none font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
+                className={`text-[clamp(3.25rem,11vw,4.5rem)] leading-none font-black font-mono tracking-tight tabular-nums transition-colors duration-300 ${
                   isLastMinute
                     ? isDarkMode
                       ? "text-rose-400 animate-pulse"
