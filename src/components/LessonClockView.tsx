@@ -338,7 +338,7 @@ export default function LessonClockView({
         {/* Current Time Section ("Vad klockan är") */}
         <section className="text-center space-y-0.5">
           <div
-            className={`text-[clamp(3.5rem,15vw,6.5rem)] leading-none font-bold font-courier tracking-tight tabular-nums drop-shadow-xs ${
+            className={`text-[clamp(4.5rem,16vw,7.5rem)] leading-none font-bold font-courier tracking-tight tabular-nums drop-shadow-xs ${
               isDarkMode ? "text-white" : "text-slate-900"
             }`}
             aria-label={`Klockan är ${clockString}`}
@@ -423,7 +423,7 @@ export default function LessonClockView({
                 Tid kvar
               </div>
               <div
-                className={`text-[clamp(2.5rem,11vw,4.5rem)] leading-none font-bold font-courier tracking-tight tabular-nums transition-colors duration-300 ${
+                className={`text-[clamp(3.5rem,12vw,5.5rem)] leading-none font-bold font-courier tracking-tight tabular-nums transition-colors duration-300 ${
                   isLastMinute
                     ? isDarkMode
                       ? "text-rose-400 animate-pulse"
