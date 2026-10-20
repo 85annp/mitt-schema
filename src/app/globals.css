@@ -10,7 +10,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-courier-prime);
+  --font-mono: var(--font-geist-mono);
+  --font-courier: var(--font-courier-prime), "Courier Prime", Courier, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
